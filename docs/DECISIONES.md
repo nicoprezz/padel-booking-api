@@ -132,3 +132,14 @@ borra de verdad confundiría a quien use la API; encaja con la regla "una pista 
 no admite reservas nuevas".
 Consecuencias: las pistas no desaparecen nunca; a revisar en el futuro (p. ej., un
 borrado físico solo para pistas sin reservas).
+
+## 012 — `active` obligatorio en `CourtRequest`
+Fecha: 2026-11-10
+Contexto: si el cliente no envía `active` al crear o editar una pista, hay que decidir qué pasa.
+Opciones: `boolean` primitivo (Jackson pone `false` sin avisar) · `Boolean` sin validar y valor
+por defecto en el service · `@NotNull Boolean` (obligatorio)
+Decisión: `@NotNull Boolean active`; si falta, 400.
+Por qué: con `boolean` un PUT que olvide el campo desactivaría la pista sin que nadie lo pida;
+ser obligatorio encaja con `PUT` como reemplazo completo (#010) y hace que POST y PUT se
+comporten igual.
+Consecuencias: el cliente siempre tiene que enviar `active`, también al crear una pista.
