@@ -9,9 +9,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CourtRepository extends JpaRepository<Court, Long> {
 
-    // Para el POST: ¿hay alguna pista con este nombre?
+    /**
+     * Comprueba si hay alguna pista con este nombre. Se usa al crear (POST).
+     *
+     * @implNote
+     * Consulta derivada: Spring Data genera el SQL a partir del nombre del método.
+     *
+     * @param name nombre a comprobar
+     * @return {@code true} si ya existe una pista con ese nombre
+     */
     boolean existsByName(String name);
 
-    // Para el PUT: ¿hay OTRA pista (con distinto id) que tenga este nombre?
+    /**
+     * Comprueba si hay OTRA pista (con distinto id) con este nombre. Se usa al editar (PUT),
+     * para que mantener el mismo nombre no choque con la propia pista.
+     *
+     * @param name nombre a comprobar
+     * @param id   id de la pista que se está editando (se excluye de la búsqueda)
+     * @return {@code true} si otra pista ya usa ese nombre
+     */
     boolean existsByNameAndIdNot(String name, Long id);
 }

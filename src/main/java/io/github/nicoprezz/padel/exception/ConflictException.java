@@ -6,6 +6,9 @@ package io.github.nicoprezz.padel.exception;
  */
 public class ConflictException extends RuntimeException {
 
+    /**
+     * @param message explicación para el cliente; acabará en el JSON de error
+     */
     public ConflictException(String message) {
         super(message);
     }

@@ -7,6 +7,9 @@ package io.github.nicoprezz.padel.exception;
  */
 public class NotFoundException extends RuntimeException {
 
+    /**
+     * @param message explicación para el cliente; acabará en el JSON de error
+     */
     public NotFoundException(String message) {
         super(message);
     }

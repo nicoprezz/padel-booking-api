@@ -24,8 +24,15 @@ public record CourtRequest(
         @NotNull Boolean active
 ) {
 
-    // Crea una entidad nueva para el POST (→ DECISIONES.md #013). En el PUT no se usa:
-    // allí se modifica la pista existente con sus setters.
+    /**
+     * Crea una entidad nueva a partir del request (→ DECISIONES.md #013).
+     *
+     * @apiNote
+     * Solo para el POST. En el PUT no se usa: allí se modifica la pista existente con
+     * sus setters; una entidad nueva no tendría id y {@code save} haría un INSERT.
+     *
+     * @return una pista sin id (lo asigna MySQL al guardarla)
+     */
     public Court toEntity() {
         return new Court(name, type, active);
     }

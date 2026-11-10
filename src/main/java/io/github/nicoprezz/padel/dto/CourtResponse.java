@@ -14,7 +14,13 @@ public record CourtResponse(
         boolean active
 ) {
 
-    // Convierte la entidad en lo que ve el cliente (→ DECISIONES.md #013). Lo llama el service.
+    /**
+     * Convierte la entidad en lo que ve el cliente (→ DECISIONES.md #013).
+     * Lo llama el service; el controller nunca ve la entidad (→ DECISIONES.md #014).
+     *
+     * @param court pista ya guardada (con id)
+     * @return el DTO con los datos de la pista
+     */
     public static CourtResponse from(Court court) {
         return new CourtResponse(court.getId(), court.getName(), court.getType(), court.isActive());
     }

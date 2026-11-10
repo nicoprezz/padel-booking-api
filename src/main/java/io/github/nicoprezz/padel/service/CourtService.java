@@ -9,7 +9,6 @@ import io.github.nicoprezz.padel.repository.CourtRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Reglas de negocio de las pistas. Recibe y devuelve DTOs: la entidad Court no sale de
@@ -21,38 +20,79 @@ public class CourtService {
 
     private final CourtRepository courtRepository;
 
-    // Inyección por constructor: Spring ve un único constructor y le pasa el repositorio.
-    // "final" garantiza que siempre está asignado y no cambia.
+    /**
+     * Crea el servicio con su repositorio.
+     *
+     * @implNote
+     * Inyección por constructor: Spring ve un único constructor y le pasa el repositorio.
+     * {@code final} garantiza que siempre está asignado y no cambia.
+     *
+     * @param courtRepository acceso a la tabla "courts"
+     */
     public CourtService(CourtRepository courtRepository) {
         this.courtRepository = courtRepository;
     }
 
+    /**
+     * Devuelve todas las pistas del club, activas o no.
+     *
+     * @return las pistas como DTOs; una lista vacía si no hay ninguna
+     */
     public List<CourtResponse> findAll() {
         return courtRepository.findAll().stream()
                 .map(CourtResponse::from)
                 .toList();
     }
 
+    /**
+     * Devuelve una pista por su id. Solo lee: no guarda nada.
+     *
+     * @param id id de la pista
+     * @return la pista como DTO
+     * @throws NotFoundException si no existe una pista con ese id (404)
+     */
     public CourtResponse findById(Long id) {
-        // En este caso no hay nada que guardar solo se devuelve
         return CourtResponse.from(findCourtOrThrow(id));
     }
 
+    /**
+     * Crea una pista nueva.
+     *
+     * @implNote
+     * Se convierte a DTO lo que devuelve {@code save}, no la entidad original:
+     * el id lo genera MySQL al hacer el INSERT (→ DECISIONES.md #007).
+     *
+     * @param request datos de la pista, ya validados con {@code @Valid}
+     * @return la pista creada, con su id
+     * @throws ConflictException si ya existe una pista con ese nombre (409)
+     */
     public CourtResponse create(CourtRequest request) {
-        // Si ya hay una pista con ese nombre → ConflictException (409).
-        if(courtRepository.existsByName(request.name())) {
+        if (courtRepository.existsByName(request.name())) {
             throw new ConflictException("Ya existe una pista con el mismo nombre.");
         }
-        // Si no, convierte el request en entidad, guárdala y devuelve el CourtResponse.
         return CourtResponse.from(courtRepository.save(request.toEntity()));
     }
 
+    /**
+     * Reemplaza todos los datos de una pista existente (PUT, → DECISIONES.md #010).
+     * Desactivar una pista es enviar {@code "active": false} (→ DECISIONES.md #011).
+     *
+     * @implNote
+     * Primero el 404 y después el 409: si la pista no existe, el nombre da igual.
+     * Se usa {@code existsByNameAndIdNot} para que mantener el mismo nombre no choque
+     * con la propia pista. Se modifica la entidad existente con setters (no
+     * {@code toEntity()}) para que {@code save} haga un UPDATE y no un INSERT.
+     *
+     * @param id      id de la pista a editar
+     * @param request datos nuevos, ya validados con {@code @Valid}
+     * @return la pista actualizada
+     * @throws NotFoundException si no existe una pista con ese id (404)
+     * @throws ConflictException si otra pista ya usa ese nombre (409)
+     */
     public CourtResponse update(Long id, CourtRequest request) {
-        // 404 si no existe, 409 si el nombre lo usa OTRA pista,
-        // actualizar con los setters, guardar y devolver el CourtResponse.
         Court court = findCourtOrThrow(id);
 
-        if(courtRepository.existsByNameAndIdNot(request.name(), id)) {
+        if (courtRepository.existsByNameAndIdNot(request.name(), id)) {
             throw new ConflictException("Ya existe una pista con el mismo nombre.");
         }
 
@@ -63,8 +103,14 @@ public class CourtService {
         return CourtResponse.from(courtRepository.save(court));
     }
 
-    private Court findCourtOrThrow(Long id){
-        // Si no existe → NotFoundException (404).
+    /**
+     * Busca la entidad de una pista. Lo comparten {@link #findById} y {@link #update}.
+     *
+     * @param id id de la pista
+     * @return la entidad (no el DTO), para poder modificarla con sus setters
+     * @throws NotFoundException si no existe una pista con ese id (404)
+     */
+    private Court findCourtOrThrow(Long id) {
         return courtRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No existe una pista con este Id."));
     }
