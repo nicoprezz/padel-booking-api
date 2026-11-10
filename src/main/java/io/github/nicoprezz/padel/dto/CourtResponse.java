@@ -1,5 +1,6 @@
 package io.github.nicoprezz.padel.dto;
 
+import io.github.nicoprezz.padel.model.Court;
 import io.github.nicoprezz.padel.model.CourtType;
 
 /**
@@ -12,4 +13,9 @@ public record CourtResponse(
         CourtType type,
         boolean active
 ) {
+
+    // Convierte la entidad en lo que ve el cliente (→ DECISIONES.md #013). Lo llama el service.
+    public static CourtResponse from(Court court) {
+        return new CourtResponse(court.getId(), court.getName(), court.getType(), court.isActive());
+    }
 }

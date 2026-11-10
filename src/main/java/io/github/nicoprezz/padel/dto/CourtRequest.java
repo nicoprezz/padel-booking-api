@@ -1,5 +1,6 @@
 package io.github.nicoprezz.padel.dto;
 
+import io.github.nicoprezz.padel.model.Court;
 import io.github.nicoprezz.padel.model.CourtType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,4 +23,10 @@ public record CourtRequest(
         // un primitivo no puede ser null: si falta el campo, Jackson pondría false sin avisar.
         @NotNull Boolean active
 ) {
+
+    // Crea una entidad nueva para el POST (→ DECISIONES.md #013). En el PUT no se usa:
+    // allí se modifica la pista existente con sus setters.
+    public Court toEntity() {
+        return new Court(name, type, active);
+    }
 }
