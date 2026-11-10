@@ -143,3 +143,29 @@ Por qué: con `boolean` un PUT que olvide el campo desactivaría la pista sin qu
 ser obligatorio encaja con `PUT` como reemplazo completo (#010) y hace que POST y PUT se
 comporten igual.
 Consecuencias: el cliente siempre tiene que enviar `active`, también al crear una pista.
+
+## 013 — Conversión DTO ↔ entidad en los propios DTOs
+Fecha: 2026-11-10
+Contexto: el service necesita convertir `CourtRequest` → `Court` y `Court` → `CourtResponse`.
+Opciones: métodos privados en el service · clase `CourtMapper` aparte · métodos en el
+propio DTO · librería MapStruct
+Decisión: métodos en el DTO (`CourtResponse.from(Court)`, `CourtRequest.toEntity()`).
+Por qué: con tres campos es lo más legible y no añade archivos; el service se queda
+con las reglas del club. MapStruct se descarta por ser una dependencia que oculta
+lo que se quiere aprender.
+Consecuencias: los DTOs importan la entidad (la entidad sigue sin conocer la API). La
+actualización del PUT se hace con setters en el service, no en el DTO. Si el proyecto
+crece (más entidades o conversiones complejas), pasar a una clase mapper.
+
+## 014 — El service recibe y devuelve DTOs
+Fecha: 2026-11-10
+Contexto: hay que decidir en qué capa se convierte DTO ↔ entidad, es decir, quién llama a
+`from()` y `toEntity()`.
+Opciones: el service devuelve DTOs (la entidad no sale del service) · el service devuelve
+entidades y el controller convierte
+Decisión: el service recibe `CourtRequest` y devuelve `CourtResponse`.
+Por qué: el controller queda sin lógica (solo recibe, valida y delega) y la entidad JPA
+vive en una sola capa, así que no se puede exponer por accidente.
+Consecuencias: los métodos del service no se pueden reutilizar desde otro service para
+obtener entidades; en el hito 2, `BookingService` usará `CourtRepository` directamente
+para conseguir el `Court` de una reserva.
