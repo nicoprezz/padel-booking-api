@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Acceso a la tabla "courts". Spring Data genera la implementación en tiempo de ejecución.
- * JpaRepository<Court, Long>: entidad que gestiona y tipo de su id (→ DECISIONES.md #011).
+ * JpaRepository<Court, Long>: entidad que gestiona y tipo de su id (→ DECISIONES.md #008).
  */
 public interface CourtRepository extends JpaRepository<Court, Long> {
 

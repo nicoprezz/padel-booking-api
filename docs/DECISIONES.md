@@ -1,0 +1,134 @@
+# Decisiones técnicas
+
+Registro de las decisiones de diseño e implementación del proyecto: qué opciones había,
+cuál se eligió y por qué.
+
+## Plantilla
+```
+## NNN — Título corto
+Fecha:
+Contexto: qué problema había
+Opciones: A, B, (C)
+Decisión: cuál se eligió
+Por qué: 2-3 razones
+Consecuencias: qué se gana y qué se pierde
+```
+
+---
+
+## 001 — Arquitectura por capas
+Fecha: nov 2026
+Contexto: necesito una estructura para la API que pueda entender y explicar.
+Opciones: por capas (controller/service/repository) · por funcionalidad (court/, booking/)
+Decisión: por capas.
+Por qué: es la más común en ofertas de Spring Boot y la más fácil de aprender primero.
+Consecuencias: si el proyecto crece mucho, los paquetes se llenan; valorar migrar a
+paquetes por funcionalidad más adelante.
+
+## 002 — MySQL en Docker con `docker run` (Compose más adelante)
+Fecha: 2026-11-05
+Contexto: la app debe arrancar conectada a MySQL desde el principio, y no quiero instalar
+MySQL directamente en Windows.
+Opciones: MySQL instalado en Windows · contenedor con `docker run` · `docker-compose.yml`
+Decisión: `docker run` con la imagen `mysql:8.4`, un volumen con nombre (`padel-data`) y
+un usuario de aplicación (`padel`) distinto de `root`.
+Por qué: no ensucia el sistema y se borra sin dejar rastro; escribir el comando a mano
+me obliga a entender cada pieza (imagen, variables de entorno, puerto, volumen); Compose
+tiene más sentido cuando haya dos servicios (app + BD).
+Consecuencias: el comando es largo y hay que recordarlo (`docker start padel-mysql` para
+los siguientes arranques); más adelante lo traduciré a `docker-compose.yml`.
+
+## 003 — Group y paquete Java
+Fecha: 2026-11-05
+Contexto: Maven y Java piden un nombre de paquete único, normalmente un dominio al revés.
+No tengo dominio propio.
+Opciones: `dev.<nombre>` (exige tener ese dominio) · `io.github.<usuario>` · `com.example`
+Decisión: Group `io.github.nicoprezz`, paquete `io.github.nicoprezz.padel`.
+Por qué: GitHub me da gratis el dominio `nicoprezz.github.io`, así que el nombre es mío
+y es único de verdad; `com.example` queda poco profesional.
+Consecuencias: si cambio de usuario de GitHub, el paquete quedaría desfasado (se puede
+renombrar, pero toca todos los archivos).
+
+## 004 — Formato de configuración de Spring
+Fecha: 2026-11-05
+Contexto: Spring Initializr pide elegir el formato de `application.*`.
+Opciones: `application.properties` · `application.yaml`
+Decisión: Properties.
+Por qué: una línea por propiedad, sin errores de sangría; es lo que usan las guías
+oficiales de spring.io, así que puedo compararlas directamente.
+Consecuencias: con muchas propiedades se repiten prefijos (`spring.datasource.*`);
+si crece, puedo migrar a YAML (Spring lee los dos).
+
+## 005 — Dónde va la contraseña de la base de datos
+Fecha: 2026-11-05
+Contexto: la app necesita la contraseña de MySQL, pero el repo es público.
+Opciones: variable de entorno (`${DB_PASSWORD}`) · `application-local.properties` ignorado
+Decisión: `application-local.properties` en `src/main/resources`, en `.gitignore`,
+cargado con el perfil `local` (`spring.profiles.active=local`). Se versiona una plantilla,
+`application-local.properties.example`.
+Por qué: se escribe una vez y no hay que definir variables en cada terminal/IDE; nunca
+sale de mi máquina.
+Consecuencias: quien clone el repo tiene que crear su propio archivo local a partir de la
+plantilla; al desplegar habrá que pasar a variables de entorno.
+
+## 006 — Gestión del esquema de la base de datos (`ddl-auto`)
+Fecha: 2026-11-05
+Contexto: Hibernate puede crear/modificar las tablas a partir de las entidades al arrancar.
+Opciones: `none` · `validate` (+ `schema.sql` o Flyway) · `update` · `create` · `create-drop`
+Decisión: `update`, con `spring.jpa.show-sql=true` en el perfil local para ver el SQL
+que genera.
+Por qué: al principio las entidades cambiarán mucho; `update` no borra datos de prueba;
+con `show-sql` veo el SQL real que se ejecuta.
+Consecuencias: no borra columnas ni tablas viejas ni modifica columnas existentes (al
+cambiar una restricción hay que borrar la tabla a mano); no sirve para producción.
+Revisar más adelante: pasar a `validate` + Flyway.
+
+## 007 — Estrategia de generación de ids
+Fecha: 2026-11-10
+Contexto: las entidades necesitan un id generado automáticamente.
+Opciones: `GenerationType.IDENTITY` · `GenerationType.AUTO`
+Decisión: `IDENTITY` (columna `AUTO_INCREMENT` de MySQL).
+Por qué: aprovecha una funcionalidad nativa de MySQL; con `AUTO`, Hibernate puede crear
+una tabla `hibernate_sequence` extra que no necesito.
+Consecuencias: Hibernate tiene que hacer el `INSERT` en cuanto se llama a `save()` para
+conocer el id (no puede agrupar inserciones en lote). Irrelevante a esta escala.
+
+## 008 — Interfaz base de los repositorios
+Fecha: 2026-11-10
+Contexto: Spring Data ofrece varias interfaces de las que heredar.
+Opciones: `CrudRepository` · `JpaRepository`
+Decisión: `JpaRepository`.
+Por qué: incluye paginación y ordenación (las necesitaré si el proyecto escala) y
+`findAll()` devuelve `List` en lugar de `Iterable`, que es más cómodo en los servicios.
+Consecuencias: acopla el repositorio a JPA (no podría cambiar a otro almacén sin tocarlo);
+asumible porque el proyecto es JPA + MySQL.
+
+## 009 — Nombre de pista duplicado → 409 Conflict
+Fecha: 2026-11-10
+Contexto: el nombre de una pista es único; hay que decidir qué responde la API si se repite.
+Opciones: 400 Bad Request · 409 Conflict
+Decisión: 409 Conflict.
+Por qué: es el estándar; los datos tienen un formato válido (no es un 400), pero chocan
+con el estado actual del servidor.
+Consecuencias: el `GlobalExceptionHandler` necesitará una excepción propia para conflictos.
+
+## 010 — Edición de pistas con PUT (sin PATCH)
+Fecha: 2026-11-10
+Contexto: hay que elegir cómo se edita una pista.
+Opciones: `PUT` (reemplazo completo) · `PATCH` (actualización parcial) · ambos
+Decisión: solo `PUT`; el cliente envía todos los campos.
+Por qué: reutiliza el mismo DTO y las mismas validaciones que el `POST`; es idempotente;
+`PATCH` obliga a distinguir "campo ausente" de "campo null", y es complejidad que no hace falta.
+Consecuencias: para cambiar un campo hay que reenviar la pista entera. Si se necesita,
+se puede añadir `PATCH` más adelante.
+
+## 011 — Sin borrado de pistas (se desactivan)
+Fecha: 2026-11-10
+Contexto: `DELETE /api/courts/{id}` podía borrar físicamente o desactivar.
+Opciones: borrado físico · `DELETE` que desactiva (soft delete) · sin `DELETE`, desactivar con `PUT`
+Decisión: no hay endpoint `DELETE`; una pista se desactiva con `PUT` y `"active": false`.
+Por qué: conserva el historial (las reservas apuntarán a la pista); un `DELETE` que no
+borra de verdad confundiría a quien use la API; encaja con la regla "una pista inactiva
+no admite reservas nuevas".
+Consecuencias: las pistas no desaparecen nunca; a revisar en el futuro (p. ej., un
+borrado físico solo para pistas sin reservas).

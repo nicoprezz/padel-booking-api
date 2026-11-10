@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 @Table(name = "courts")
 public class Court {
 
-    // AUTO_INCREMENT de MySQL (→ DECISIONES.md #010)
+    // AUTO_INCREMENT de MySQL (→ DECISIONES.md #007)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Nullable Long id;

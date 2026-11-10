@@ -1,0 +1,8 @@
+# Plantilla de configuración local.
+# Cópiala como application-local.properties (en esta misma carpeta) y rellena tus valores.
+
+# application-local.properties NO se sube a git (ver .gitignore).
+spring.datasource.password=CAMBIAME
+
+# Opcional: muestra en consola el SQL que genera Hibernate (útil en desarrollo)
+spring.jpa.show-sql=true
