@@ -1,11 +1,14 @@
 info:
-  name: non-existing-court
+  name: put-non-existing-court-invalid-body-400
   type: http
-  seq: 2
+  seq: 10
 
 http:
-  method: GET
+  method: PUT
   url: http://localhost:8080/api/courts/999
+  body:
+    type: json
+    data: '{"name": "Pista 9", "type": "INDOOR"}'
   auth: inherit
 
 settings:

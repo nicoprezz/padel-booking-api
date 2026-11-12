@@ -1,14 +1,14 @@
 info:
-  name: create-court
+  name: put-without-active-status-400
   type: http
-  seq: 1
+  seq: 9
 
 http:
-  method: POST
-  url: http://localhost:8080/api/courts
+  method: PUT
+  url: http://localhost:8080/api/courts/2
   body:
     type: json
-    data: '{"name": "Pista 1", "type": "INDOOR", "active": true }'
+    data: '{"name": "Pista 2", "type": "INDOOR"}'
   auth: inherit
 
 settings:

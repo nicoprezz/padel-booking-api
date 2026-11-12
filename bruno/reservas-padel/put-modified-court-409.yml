@@ -1,14 +1,14 @@
 info:
-  name: create-with-invalid-enum
+  name: put-modified-court-409
   type: http
-  seq: 4
+  seq: 7
 
 http:
-  method: POST
-  url: http://localhost:8080/api/courts
+  method: PUT
+  url: http://localhost:8080/api/courts/2
   body:
     type: json
-    data: '{"name": "", "type": "HELLO"}'
+    data: '{"name": "Pista 1", "type": "INDOOR", "active": true}'
   auth: inherit
 
 settings:

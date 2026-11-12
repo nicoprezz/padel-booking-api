@@ -1,14 +1,14 @@
 info:
-  name: create-with-invalid-json
+  name: put-non-existing-court-404
   type: http
-  seq: 5
+  seq: 8
 
 http:
-  method: POST
-  url: http://localhost:8080/api/courts
+  method: PUT
+  url: http://localhost:8080/api/courts/999
   body:
     type: json
-    data: '{"name": "", "type": "HELLO"'
+    data: '{"name": "Pista 9", "type": "INDOOR", "active": true}'
   auth: inherit
 
 settings:
