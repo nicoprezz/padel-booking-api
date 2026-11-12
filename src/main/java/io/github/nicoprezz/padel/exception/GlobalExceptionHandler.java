@@ -1,6 +1,7 @@
 package io.github.nicoprezz.padel.exception;
 
 import io.github.nicoprezz.padel.dto.ErrorResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -45,6 +46,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ErrorResponse> handleConflict(ConflictException ex) {
         return build(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    /**
+     * La base de datos rechaza la operación por una restricción de integridad
+     * ({@code UNIQUE}, clave foránea, {@code NOT NULL}...).
+     *
+     * @implNote
+     * Es la red de seguridad de la comprobación previa del service ({@code existsByName}):
+     * si llegan dos peticiones con el mismo nombre a la vez, ambas pasan la comprobación y
+     * solo el {@code UNIQUE} de la tabla frena la segunda (→ DECISIONES.md #009). No se
+     * devuelve {@code ex.getMessage()}: contiene la sentencia SQL, columnas y nombres de
+     * restricciones, que revelan el esquema de la base de datos.
+     *
+     * @param ex la excepción traducida por Spring desde el error de la base de datos
+     * @return 409 Conflict con un mensaje genérico
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataViolation(DataIntegrityViolationException ex) {
+        return build(HttpStatus.CONFLICT,
+                "La operación entra en conflicto con los datos existentes.");
     }
 
     /**

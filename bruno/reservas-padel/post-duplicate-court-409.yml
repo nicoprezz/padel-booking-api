@@ -1,0 +1,19 @@
+info:
+  name: post-duplicate-court-409
+  type: http
+  seq: 11
+
+http:
+  method: POST
+  url: http://localhost:8080/api/courts
+  body:
+    type: json
+    data: '{"name": "Pista 1", "type": "INDOOR", "active": true}'
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
