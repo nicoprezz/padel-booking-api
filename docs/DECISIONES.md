@@ -111,6 +111,10 @@ Decisión: 409 Conflict.
 Por qué: es el estándar; los datos tienen un formato válido (no es un 400), pero chocan
 con el estado actual del servidor.
 Consecuencias: el `GlobalExceptionHandler` necesitará una excepción propia para conflictos.
+La comprobación previa (`existsByName` / `existsByNameAndIdNot`) no basta: con dos peticiones
+simultáneas ambas la pasan. La garantía real es el `UNIQUE` de la tabla más un handler de
+`DataIntegrityViolationException` → 409 con mensaje genérico (sin `ex.getMessage()`, que
+contiene SQL). La comprobación previa se mantiene para dar un mensaje claro en el caso normal.
 
 ## 010 — Edición de pistas con PUT (sin PATCH)
 Fecha: 2026-11-10
