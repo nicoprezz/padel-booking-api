@@ -7,7 +7,7 @@ Includes club booking rules, authentication and an AI assistant that books court
 natural-language requests.
 
 ## Features
-- [ ] Court management
+- [x] Court management
 - [ ] Bookings with club rules (no overlaps, opening hours, limits)
 - [ ] Free time slots per court and day
 - [ ] JWT authentication with roles

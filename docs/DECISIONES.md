@@ -224,3 +224,6 @@ prueba) hace que V1 se ejecute de verdad, como pasará al clonar el repo o con D
 Consecuencias: cada cambio de esquema necesita un script nuevo (`V2__...sql`); los
 aplicados no se tocan (Flyway guarda su checksum y falla si cambian). `validate` comprueba
 tablas, columnas y tipos, pero no `NOT NULL` ni `UNIQUE`: esas dependen solo del script.
+Los `nullable`/`unique` de los `@Column` se mantienen como documentación (y por si algo
+vuelve a generar el esquema desde las entidades, p. ej. en tests); deben coincidir con las
+migraciones: al cambiar una restricción en un `V<n>`, se actualiza también la entidad.
