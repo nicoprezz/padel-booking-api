@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
      * @implNote
      * Es la red de seguridad de la comprobación previa del service ({@code existsByName}):
      * si llegan dos peticiones con el mismo nombre a la vez, ambas pasan la comprobación y
-     * solo el {@code UNIQUE} de la tabla frena la segunda (→ ADR-0009). No se
+     * solo el {@code UNIQUE} de la tabla frena la segunda (→ ADR-0025). No se
      * devuelve {@code ex.getMessage()}: contiene la sentencia SQL, columnas y nombres de
      * restricciones, que revelan el esquema de la base de datos.
      *

@@ -1,6 +1,6 @@
 # ADR-0007 — Estrategia de generación de ids
 
-Estado: Aceptada
+Estado: Sustituida por [ADR-0023](0023-identity-id-generation.md)
 
 Fecha: 2026-11-10
 

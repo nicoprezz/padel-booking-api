@@ -60,7 +60,7 @@ public class CourtService {
      *
      * @implNote
      * Se convierte a DTO lo que devuelve {@code save}, no la entidad original:
-     * el id lo genera MySQL al hacer el INSERT (→ ADR-0007).
+     * el id lo genera MySQL al hacer el INSERT (→ ADR-0023).
      *
      * @param request datos de la pista, ya validados con {@code @Valid}
      * @return la pista creada, con su id

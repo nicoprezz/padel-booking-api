@@ -13,7 +13,7 @@ public class Court {
 
     /**
      * Clave primaria. La genera MySQL con AUTO_INCREMENT al hacer el INSERT
-     * (→ ADR-0007), por eso es {@code null} hasta que se guarda.
+     * (→ ADR-0023), por eso es {@code null} hasta que se guarda.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

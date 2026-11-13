@@ -1,6 +1,6 @@
 # ADR-0009 — Nombre de pista duplicado → 409 Conflict
 
-Estado: Aceptada
+Estado: Aceptada · Ampliada por [ADR-0025](0025-concurrent-duplicate-names.md)
 
 Fecha: 2026-11-10
 

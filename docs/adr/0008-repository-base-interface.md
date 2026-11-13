@@ -1,6 +1,6 @@
 # ADR-0008 — Interfaz base de los repositorios
 
-Estado: Aceptada
+Estado: Sustituida por [ADR-0024](0024-jpa-repository-base.md)
 
 Fecha: 2026-11-10
 
