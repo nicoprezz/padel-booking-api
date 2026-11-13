@@ -28,4 +28,4 @@ tomaron las decisiones.
 Consecuencias: hay un archivo por decisión y un índice que mantener (lo hace la skill
 `record-decision`). Las decisiones no se reescriben: las correcciones van como ADR nuevos
 (ADR-0023 a ADR-0025). Las ADR 0001–0017 conservan en su texto las referencias `#NNN`
-del registro anterior, cuyo historial está en `git log -- docs/DECISIONES.md`.
+del registro anterior; su historial sigue en Git (lo indica el commit de la migración).
