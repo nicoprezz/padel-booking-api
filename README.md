@@ -41,6 +41,8 @@ Java · Spring Boot · Spring Data JPA · MySQL · Spring Security · JUnit · D
   `fix:`, `docs:`…).
 - **Milestones:** each project stage is a GitHub milestone; closing one means a PR from
   `develop` to `main` and an annotated version tag.
+- **Decisions:** every technical decision is recorded as an ADR (context, options
+  considered, decision and consequences) in [`docs/adr/`](docs/adr/README.md).
 - **Claude Code:** I use it as a tutor, not as a code generator. The project rules it
   follows are versioned:
   - `CLAUDE.md`: project overview and map

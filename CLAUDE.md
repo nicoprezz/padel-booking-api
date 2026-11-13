@@ -20,7 +20,7 @@ del club.
 - `.claude/rules/`: normas del proyecto. Siempre: arquitectura, decisiones, Git y estilo
   de código. Solo al tocar sus carpetas: API y base de datos
 - `.claude/skills/`: pasos de tareas que se repiten (recurso nuevo, migración, cierre de hito)
-- `docs/DECISIONES.md`: registro de decisiones técnicas
+- `docs/adr/`: registro de decisiones técnicas (un ADR por decisión, índice en su README)
 - `src/main/resources/db/migration/`: migraciones de Flyway
 - `bruno/`: peticiones de prueba de la API
 

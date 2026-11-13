@@ -12,8 +12,8 @@ conservar también las alternativas descartadas y el razonamiento.
 
 - Archivo: `NNNN-<slug-en-inglés>.md`. El contenido va en español.
 - Entre ADR se enlaza con rutas relativas; en el código se cita como `ADR-NNNN`.
-- En las ADR 0001–0017 (migradas del antiguo `DECISIONES.md`), las referencias `#NNN`
-  del texto equivalen a `ADR-0NNN`.
+- En las ADR 0001–0017 (migradas del registro anterior, de un solo archivo), las
+  referencias `#NNN` del texto equivalen a `ADR-0NNN`.
 
 ### Estados
 - `Aceptada`: vigente.
