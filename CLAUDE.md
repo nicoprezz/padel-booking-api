@@ -17,7 +17,8 @@ del club.
 - Issues y PR: `gh` (GitHub CLI)
 
 ## Mapa
-- `.claude/rules/`: normas del proyecto (arquitectura, decisiones, Git, estilo de código)
+- `.claude/rules/`: normas del proyecto. Siempre: arquitectura, decisiones, Git y estilo
+  de código. Solo al tocar sus carpetas: API y base de datos
 - `docs/DECISIONES.md`: registro de decisiones técnicas
 - `src/main/resources/db/migration/`: migraciones de Flyway
 - `bruno/`: peticiones de prueba de la API
