@@ -21,6 +21,9 @@ conservar también las alternativas descartadas y el razonamiento.
   anularla.
 - `Sustituida por [ADR-NNNN](...)`: ya no está vigente; manda la nueva.
 
+La ADR nueva enlaza a la antigua con una línea `Sustituye a: [ADR-NNNN](...)` o
+`Amplía a: [ADR-NNNN](...)` debajo de su Estado. En la antigua solo cambia el Estado.
+
 ### Plantilla
 ```
 # ADR-NNNN — Título corto
