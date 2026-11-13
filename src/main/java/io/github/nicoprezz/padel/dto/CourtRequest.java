@@ -19,13 +19,13 @@ public record CourtRequest(
         // @NotNull: obligatorio. Un valor que no existe en CourtType ya lo rechaza Jackson.
         @NotNull CourtType type,
 
-        // @NotNull: obligatorio (→ DECISIONES.md #012). Va con Boolean y no boolean porque
+        // @NotNull: obligatorio (→ ADR-0012). Va con Boolean y no boolean porque
         // un primitivo no puede ser null: si falta el campo, Jackson pondría false sin avisar.
         @NotNull Boolean active
 ) {
 
     /**
-     * Crea una entidad nueva a partir del request (→ DECISIONES.md #013).
+     * Crea una entidad nueva a partir del request (→ ADR-0013).
      *
      * @apiNote
      * Solo para el POST. En el PUT no se usa: allí se modifica la pista existente con

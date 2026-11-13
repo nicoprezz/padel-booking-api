@@ -3,7 +3,7 @@ package io.github.nicoprezz.padel.dto;
 import org.springframework.http.HttpStatus;
 
 /**
- * Cuerpo JSON que recibe el cliente cuando algo sale mal (→ DECISIONES.md #016).
+ * Cuerpo JSON que recibe el cliente cuando algo sale mal (→ ADR-0016).
  * Ejemplo: {@code { "status": 409, "error": "Conflict", "message": "Ya existe una pista..." }}.
  * Lo construye siempre el GlobalExceptionHandler, nunca un controller.
  *

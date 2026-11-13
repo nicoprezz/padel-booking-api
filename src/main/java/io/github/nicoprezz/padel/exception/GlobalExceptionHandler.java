@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Traduce las excepciones que salen de los controllers a respuestas HTTP con un
- * {@link ErrorResponse} (→ DECISIONES.md #016).
+ * {@link ErrorResponse} (→ ADR-0016).
  *
  * @implNote
  * {@code @RestControllerAdvice} hace que Spring aplique estos métodos a <b>todos</b> los
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
      * @implNote
      * Es la red de seguridad de la comprobación previa del service ({@code existsByName}):
      * si llegan dos peticiones con el mismo nombre a la vez, ambas pasan la comprobación y
-     * solo el {@code UNIQUE} de la tabla frena la segunda (→ DECISIONES.md #009). No se
+     * solo el {@code UNIQUE} de la tabla frena la segunda (→ ADR-0009). No se
      * devuelve {@code ex.getMessage()}: contiene la sentencia SQL, columnas y nombres de
      * restricciones, que revelan el esquema de la base de datos.
      *

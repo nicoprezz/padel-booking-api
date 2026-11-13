@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Reglas de negocio de las pistas. Recibe y devuelve DTOs: la entidad Court no sale de
- * aquí (→ DECISIONES.md #014). Lanza excepciones propias; el GlobalExceptionHandler las
+ * aquí (→ ADR-0014). Lanza excepciones propias; el GlobalExceptionHandler las
  * convierte en respuestas HTTP (404, 409).
  */
 @Service
@@ -60,7 +60,7 @@ public class CourtService {
      *
      * @implNote
      * Se convierte a DTO lo que devuelve {@code save}, no la entidad original:
-     * el id lo genera MySQL al hacer el INSERT (→ DECISIONES.md #007).
+     * el id lo genera MySQL al hacer el INSERT (→ ADR-0007).
      *
      * @param request datos de la pista, ya validados con {@code @Valid}
      * @return la pista creada, con su id
@@ -74,8 +74,8 @@ public class CourtService {
     }
 
     /**
-     * Reemplaza todos los datos de una pista existente (PUT, → DECISIONES.md #010).
-     * Desactivar una pista es enviar {@code "active": false} (→ DECISIONES.md #011).
+     * Reemplaza todos los datos de una pista existente (PUT, → ADR-0010).
+     * Desactivar una pista es enviar {@code "active": false} (→ ADR-0011).
      *
      * @implNote
      * Primero el 404 y después el 409: si la pista no existe, el nombre da igual.
