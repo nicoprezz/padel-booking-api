@@ -26,6 +26,3 @@ del club.
 
 ## Hito actual
 **Hito 1.5 — Organización del proyecto** (milestone en GitHub)
-
-<!-- Instrucciones personales (no versionadas) -->
-@docs-privados/CLAUDE-personal.md
