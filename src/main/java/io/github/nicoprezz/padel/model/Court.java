@@ -13,13 +13,13 @@ public class Court {
 
     /**
      * Clave primaria. La genera MySQL con AUTO_INCREMENT al hacer el INSERT
-     * (→ DECISIONES.md #007), por eso es {@code null} hasta que se guarda.
+     * (→ ADR-0023), por eso es {@code null} hasta que se guarda.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Nullable Long id;
 
-    /** Nombre de la pista; único en la tabla (un repetido da 409, → DECISIONES.md #009). */
+    /** Nombre de la pista; único en la tabla (un repetido da 409, → ADR-0009). */
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -32,7 +32,7 @@ public class Court {
     private CourtType type;
 
     /**
-     * Si admite reservas nuevas. Las pistas no se borran, se desactivan (→ DECISIONES.md #011).
+     * Si admite reservas nuevas. Las pistas no se borran, se desactivan (→ ADR-0011).
      *
      * @implNote
      * {@code nullable = false} es necesario aunque sea un primitivo: un {@code @Column}

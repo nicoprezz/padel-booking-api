@@ -15,8 +15,8 @@ public record CourtResponse(
 ) {
 
     /**
-     * Convierte la entidad en lo que ve el cliente (→ DECISIONES.md #013).
-     * Lo llama el service; el controller nunca ve la entidad (→ DECISIONES.md #014).
+     * Convierte la entidad en lo que ve el cliente (→ ADR-0013).
+     * Lo llama el service; el controller nunca ve la entidad (→ ADR-0014).
      *
      * @param court pista ya guardada (con id)
      * @return el DTO con los datos de la pista
