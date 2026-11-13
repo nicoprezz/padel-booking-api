@@ -33,6 +33,21 @@ Java · Spring Boot · Spring Data JPA · MySQL · Spring Security · JUnit · D
 ## What I learned
 <!-- TODO: 3-5 puntos. Ejemplo: cómo evitar solapes de reservas con consultas JPA -->
 
+## How I work on this project
+- **Git:** simplified GitFlow. `main` holds released versions and `develop` is the
+  integration branch. Each GitHub issue gets its own `feature/<n>-<slug>` branch,
+  merged into `develop` through a squashed pull request.
+- **Commits:** [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`,
+  `fix:`, `docs:`…).
+- **Milestones:** each project stage is a GitHub milestone; closing one means a PR from
+  `develop` to `main` and an annotated version tag.
+- **Claude Code:** I use it as a tutor, not as a code generator. The project rules it
+  follows are versioned:
+  - `CLAUDE.md`: project overview and map
+  - `.claude/rules/`: architecture, code style, Git, API and database conventions
+  - `.claude/skills/`: guided steps for repeated tasks (new resource, new migration,
+    closing a milestone)
+
 ## Author
 Nicolás Pérez Fernández · Software Engineering student, University of Oviedo
 <!-- TODO: añadir enlace a LinkedIn -->
