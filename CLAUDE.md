@@ -1,20 +1,28 @@
 # CLAUDE.md — Padel Booking API
 
+API REST para gestionar las reservas de pistas de un club de pádel, aplicando las reglas
+del club.
+
 ## Stack
-- Java 21 o 25 (LTS) · Spring Boot (última estable de Spring Initializr) · Maven
-- Spring Web, Spring Data JPA, Validation · MySQL 8.4 en Docker
+- Java 21 · Spring Boot 4 · Maven
+- Spring Web MVC, Spring Data JPA, Validation · Flyway
+- MySQL 8.4 en Docker
 - Tests: JUnit 5 + Mockito
 - Más adelante: Spring Security, Docker Compose, API de un modelo de IA
 
-## Arquitectura
-Por capas: `controller` → `service` → `repository`.
-- Los controllers no tienen lógica de negocio: reciben, validan formato y delegan.
-- Las reglas del club viven en los `service`.
-- Nunca se exponen entidades JPA en la API: siempre DTOs.
-
 ## Comandos
 - Arrancar: `./mvnw spring-boot:run`
+- Compilar: `./mvnw compile`
 - Tests: `./mvnw test`
+- Issues y PR: `gh` (GitHub CLI)
 
-<!-- Instrucciones personales (no versionadas) -->
-@docs-privados/CLAUDE-personal.md
+## Mapa
+- `.claude/rules/`: normas del proyecto. Siempre: arquitectura, decisiones, Git y estilo
+  de código. Solo al tocar sus carpetas: API y base de datos
+- `.claude/skills/`: pasos de tareas que se repiten (recurso nuevo, migración, cierre de hito)
+- `docs/adr/`: registro de decisiones técnicas (un ADR por decisión, índice en su README)
+- `src/main/resources/db/migration/`: migraciones de Flyway
+- `bruno/`: peticiones de prueba de la API
+
+## Hito actual
+**Hito 1.5 — Organización del proyecto** (milestone en GitHub)

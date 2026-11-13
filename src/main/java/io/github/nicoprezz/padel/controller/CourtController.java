@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Endpoints REST de las pistas ({@code /api/courts}). Sin lógica de negocio: recibe la
  * petición, valida el formato con {@code @Valid} y delega en {@link CourtService}.
- * Sin {@code DELETE}: las pistas se desactivan con un PUT (→ DECISIONES.md #011).
+ * Sin {@code DELETE}: las pistas se desactivan con un PUT (→ ADR-0011).
  */
 @RestController
 @RequestMapping("/api/courts")
@@ -69,7 +69,7 @@ public class CourtController {
      * @implNote
      * La URL de {@code Location} se construye a partir de la petición actual
      * ({@code /api/courts}) + el id, así no se repite la ruta de {@code @RequestMapping}
-     * (→ DECISIONES.md #015).
+     * (→ ADR-0015).
      */
     @PostMapping
     public ResponseEntity<CourtResponse> create(@Valid @RequestBody CourtRequest request) {
@@ -84,7 +84,7 @@ public class CourtController {
     }
 
     /**
-     * Reemplaza todos los datos de una pista (→ DECISIONES.md #010).
+     * Reemplaza todos los datos de una pista (→ ADR-0010).
      *
      * @param id      id de la pista, tomado de la URL
      * @param request datos nuevos; {@code @Valid} los comprueba antes de entrar
