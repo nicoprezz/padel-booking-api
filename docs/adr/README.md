@@ -63,3 +63,8 @@ Consecuencias: qué se gana y qué se pierde
 | [0015](0015-post-returns-201-with-location.md) | POST responde 201 con cabecera `Location` | Aceptada |
 | [0016](0016-custom-error-response.md) | Formato del JSON de error: `record ErrorResponse` propio | Aceptada |
 | [0017](0017-flyway-with-ddl-validate.md) | Esquema con Flyway + `ddl-auto=validate` (sustituye a #006) | Aceptada |
+| [0018](0018-simplified-gitflow-branching.md) | Estrategia de ramas: GitFlow simplificado | Aceptada |
+| [0019](0019-claude-config-structure.md) | Estructura de la configuración de Claude Code | Aceptada |
+| [0020](0020-adr-decision-records.md) | Registro de decisiones en formato ADR | Aceptada |
+| [0021](0021-database-constraint-names.md) | Nombres de las restricciones de la base de datos | Aceptada |
+| [0022](0022-milestone-versioning.md) | Versionado de los hitos | Aceptada |
