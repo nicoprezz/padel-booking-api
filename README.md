@@ -2,6 +2,9 @@
 
 > 🚧 Work in progress — learning project.
 
+This is a learning and portfolio project: understanding every piece of code matters more
+than shipping features fast.
+
 REST API for managing court bookings at a padel club, built with Java and Spring Boot.
 Includes club booking rules, authentication and an AI assistant that books courts from
 natural-language requests.
