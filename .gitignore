@@ -31,6 +31,10 @@ docs-privados/
 
 # Claude Code: ajustes personales
 .claude/settings.local.json
+CLAUDE.local.md
+.claude/skills/start-session/
+.claude/skills/checkpoint/
+.claude/skills/close-session/
 
 # Sistema
 .DS_Store
